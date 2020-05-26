@@ -4,17 +4,18 @@ InputBot::InputBot() {}
 
 void InputBot::changeMode(MODE mode)
 {
-    if (mode == KEYBOARD)
+    if (this->mode != MODE::KEYBOARD && mode == MODE::KEYBOARD)
     {
         _buffer->type = INPUT_KEYBOARD;
         _buffer->ki.wScan = 0;
         _buffer->ki.time = 0;
         _buffer->ki.dwExtraInfo = 0;
     }
-    else {
+    else if (this->mode != MODE::MOUSE && mode == MODE::MOUSE) {
         _buffer->type = INPUT_MOUSE;
     }
-   
+
+    this->mode = mode;
 }
 
 void InputBot::KeyUp(char key)
@@ -66,7 +67,6 @@ void InputBot::MouseLeftClick()
 
 }
 
-
 void InputBot::MouseRightClick()
 {
     // right down  
@@ -79,3 +79,36 @@ void InputBot::MouseRightClick()
     _buffer->mi.dwFlags = MOUSEEVENTF_RIGHTUP;
     SendInput(1, _buffer, sizeof(INPUT));
 }
+
+
+void InputBot::MouseLeftClickDown()
+{
+    _buffer->mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+    SendInput(1, _buffer, sizeof(INPUT));
+
+}
+
+void InputBot::MouseLeftClickUp()
+{
+    ZeroMemory(_buffer, sizeof(INPUT));
+    _buffer->type = INPUT_MOUSE;
+    _buffer->mi.dwFlags = MOUSEEVENTF_LEFTUP;
+    SendInput(1, _buffer, sizeof(INPUT));
+}
+
+void InputBot::MouseRightClickDown()
+{
+    _buffer->mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
+    SendInput(1, _buffer, sizeof(INPUT));
+}
+
+void InputBot::MouseRightClickUp()
+{
+    ZeroMemory(_buffer, sizeof(INPUT));
+    _buffer->type = INPUT_MOUSE;
+    _buffer->mi.dwFlags = MOUSEEVENTF_RIGHTUP;
+    SendInput(1, _buffer, sizeof(INPUT));
+}
+
+
+

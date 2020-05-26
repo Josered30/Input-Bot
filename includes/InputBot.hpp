@@ -14,6 +14,7 @@ class InputBot
 {
 private:
     INPUT _buffer[1];
+    MODE mode;
 
 public:
     InputBot();
@@ -26,6 +27,14 @@ public:
     void MouseMove(double x, double y);
     void MouseLeftClick();
     void MouseRightClick();
+
+    void MouseLeftClickDown();
+    void MouseLeftClickUp();
+
+    void MouseRightClickDown();
+    void MouseRightClickUp();
+
+    void cleanBuffer();
 };
 
 
